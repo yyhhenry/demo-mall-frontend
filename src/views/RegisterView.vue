@@ -76,7 +76,7 @@ const register = async () => {
   <PageLayout>
     <template #header>
       <HeaderText>
-        <ElButton :type="'danger'" :icon="ArrowLeftBold" @click="$router.push('/')"></ElButton>
+        <ElButton :type="'danger'" :plain="true" :icon="ArrowLeftBold" @click="$router.push('/')"></ElButton>
       </HeaderText>
       <HeaderText>注册</HeaderText>
     </template>

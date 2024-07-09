@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { getCategories } from '@/utils/model';
+import { getCategoriesApi } from '@/utils/model';
 import { computedAsync } from '@vueuse/core';
 import { PageLayout, FlexCard, HeaderText, SwitchDark } from '@yyhhenry/element-extra';
 import { anyhow } from '@yyhhenry/rust-result';
 import { ElButton } from 'element-plus';
 
-const categories = computedAsync(getCategories, anyhow('Loading categories...'));
+const categories = computedAsync(getCategoriesApi, anyhow('Loading categories...'));
 </script>
 
 <template>

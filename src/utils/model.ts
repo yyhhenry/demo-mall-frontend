@@ -15,8 +15,7 @@ export const isUserExistsResponse = (value: unknown): value is UserExistsRespons
     isPartialUnknown<UserExistsResponse>(value) && typeof value.exists === 'boolean';
 
 
-
-export const userExists = async (name: string): Promise<Result<boolean, Error>> => {
+export const userExistsApi = async (name: string): Promise<Result<boolean, Error>> => {
     const response = await post('/api/user_exists', { name });
     if (response.isErr()) {
         return err(response.unwrapErr());
@@ -28,13 +27,21 @@ export const userExists = async (name: string): Promise<Result<boolean, Error>> 
     return ok(userExists.exists);
 };
 
+export const registerApi = async (user: User): Promise<Result<void, Error>> => {
+    const response = await post('/api/register', user);
+    if (response.isErr()) {
+        return err(response.unwrapErr());
+    }
+    return ok(undefined);
+};
+
 export interface Category {
     name: string;
 }
 export const isCategory = (value: unknown): value is Category =>
     isPartialUnknown<Category>(value) && typeof value.name === 'string';
 
-export const getCategories = async (): Promise<Result<Category[], Error>> => {
+export const getCategoriesApi = async (): Promise<Result<Category[], Error>> => {
     const response = await get('/api/categories');
     if (response.isErr()) {
         return err(response.unwrapErr());

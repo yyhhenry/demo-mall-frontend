@@ -100,8 +100,10 @@ const register = async () => {
           </template>
         </ElInput>
 
+        <div :style="{ display: 'flex', 'justify-content': 'center' }">
+          <ElButton type="primary" @click="register">注册</ElButton>
+        </div>
 
-        <ElButton type="primary" @click="register">注册</ElButton>
       </div>
     </FlexCard>
 

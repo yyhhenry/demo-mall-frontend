@@ -12,6 +12,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
     "@vueuse/core": "^10.11.0",
     "@yyhhenry/element-extra": "^0.3.1",
     "@yyhhenry/rust-result": "npm:@jsr/yyhhenry__rust-result@^0.2.9",

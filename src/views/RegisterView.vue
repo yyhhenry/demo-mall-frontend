@@ -78,7 +78,7 @@ const register = async () => {
       <HeaderText>
         <ElButton :type="'danger'" :icon="ArrowLeftBold" @click="$router.push('/')"></ElButton>
       </HeaderText>
-      <HeaderText>Register</HeaderText>
+      <HeaderText>注册</HeaderText>
     </template>
     <template #header-extra>
       <SwitchDark></SwitchDark>
@@ -92,7 +92,14 @@ const register = async () => {
             </p>
           </template>
         </ElInput>
-        <ElInput type="password" v-model="password" placeholder="密码" :style="{ marginBottom: '15px' }"></ElInput>
+        <ElInput type="password" v-model="password" placeholder="密码" :style="{ marginBottom: '15px' }">
+          <template #suffix>
+            <p :style="{ color: 'var(--el-color-danger)' }" v-if="passwordInfo.isErr()">{{
+              passwordInfo.unwrapErr().message }}
+            </p>
+          </template>
+        </ElInput>
+
 
         <ElButton type="primary" @click="register">注册</ElButton>
       </div>

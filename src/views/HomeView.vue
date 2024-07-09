@@ -7,7 +7,6 @@ import { ElButton } from 'element-plus';
 
 const categories = computedAsync(async (): Promise<Result<Category[], Error>> => {
   const url = new URL('/api/categories', location.href);
-  console.log('url', url);
   const data = await safelyAsync<unknown>(async () => await (await fetch(url)).json());
   if (data.isErr()) return err(data.unwrapErr());
   const categories = data.unwrap();
@@ -27,8 +26,8 @@ const categories = computedAsync(async (): Promise<Result<Category[], Error>> =>
     <FlexCard>
       <p> 以下是所有分类： </p>
       <div v-if="categories.isOk()" :style="{ margin: '15px' }">
-        <ElButton v-for="category of categories.unwrap()" :key="category.id">
-          #{{ category.id }} {{ category.name }}
+        <ElButton v-for="category of categories.unwrap()" :key="category.name">
+          {{ category.name }}
         </ElButton>
       </div>
       <div v-else>

@@ -16,19 +16,19 @@ export const isUserExistsResponse = (value: unknown): value is UserExistsRespons
 
 
 export const userExistsApi = async (name: string): Promise<Result<boolean, Error>> => {
-    const response = await post('/api/user_exists', { name });
+    const response = await post('/api/user/exists', { name });
     if (response.isErr()) {
         return err(response.unwrapErr());
     }
     const userExists = response.unwrap();
     if (!isUserExistsResponse(userExists)) {
-        return anyhow('/api/user_exists 返回结果异常');
+        return anyhow('/api/user/exists 返回结果异常');
     }
     return ok(userExists.exists);
 };
 
 export const registerApi = async (user: User): Promise<Result<void, Error>> => {
-    const response = await post('/api/register', user);
+    const response = await post('/api/user/register', user);
     if (response.isErr()) {
         return err(response.unwrapErr());
     }
@@ -36,19 +36,20 @@ export const registerApi = async (user: User): Promise<Result<void, Error>> => {
 };
 
 export interface Category {
+    id: number;
     name: string;
 }
 export const isCategory = (value: unknown): value is Category =>
-    isPartialUnknown<Category>(value) && typeof value.name === 'string';
+    isPartialUnknown<Category>(value) && typeof value.id === 'number' && typeof value.name === 'string';
 
 export const getCategoriesApi = async (): Promise<Result<Category[], Error>> => {
-    const response = await get('/api/categories');
+    const response = await get('/api/category/all');
     if (response.isErr()) {
         return err(response.unwrapErr());
     }
     const categories = response.unwrap();
     if (!isArrayOf(categories, isCategory)) {
-        return anyhow('/api/categories 返回结果异常');
+        return anyhow('/api/category/all 返回结果异常');
     }
     return ok(categories);
 };

@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { registerApi, userExistsApi } from '@/utils/model';
 import { computedAsync, useDebounce } from '@vueuse/core';
-import {
-  PageLayout,
-  FlexCard,
-  HeaderText,
-  SwitchDark,
-} from '@yyhhenry/element-extra';
+import { PageLayout, FlexCard, HeaderText, SwitchDark, } from '@yyhhenry/element-extra';
 import { ok, err, type Result, anyhow } from '@yyhhenry/rust-result';
 import { ElButton, ElInput, ElMessage } from 'element-plus';
 import { computed, ref } from 'vue';
@@ -82,12 +77,7 @@ const register = async () => {
   <PageLayout>
     <template #header>
       <HeaderText>
-        <ElButton
-          :type="'danger'"
-          :plain="true"
-          :icon="ArrowLeftBold"
-          @click="$router.push('/')"
-        ></ElButton>
+        <ElButton :type="'danger'" :plain="true" :icon="ArrowLeftBold" @click="$router.push('/')"></ElButton>
       </HeaderText>
       <HeaderText>注册</HeaderText>
     </template>
@@ -96,32 +86,17 @@ const register = async () => {
     </template>
     <FlexCard>
       <div :style="{ margin: '25px' }">
-        <ElInput
-          v-model="username"
-          placeholder="用户名"
-          :style="{ marginBottom: '15px' }"
-        >
+        <ElInput v-model="username" placeholder="用户名" :style="{ marginBottom: '15px' }">
           <template #suffix>
-            <p
-              :style="{ color: 'var(--el-color-danger)' }"
-              v-if="usernameInfo.isErr()"
-            >
+            <p :style="{ color: 'var(--el-color-danger)' }" v-if="usernameInfo.isErr()">
               {{ usernameInfo.unwrapErr().message }}
             </p>
           </template>
         </ElInput>
-        <ElInput
-          :show-password="true"
-          type="password"
-          v-model="password"
-          placeholder="密码"
-          :style="{ marginBottom: '15px' }"
-        >
+        <ElInput :show-password="true" type="password" v-model="password" placeholder="密码"
+          :style="{ marginBottom: '15px' }">
           <template #suffix>
-            <p
-              :style="{ color: 'var(--el-color-danger)' }"
-              v-if="passwordInfo.isErr()"
-            >
+            <p :style="{ color: 'var(--el-color-danger)' }" v-if="passwordInfo.isErr()">
               {{ passwordInfo.unwrapErr().message }}
             </p>
           </template>

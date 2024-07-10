@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { getCategoriesApi } from '@/utils/model';
 import { computedAsync } from '@vueuse/core';
-import {
-  PageLayout,
-  FlexCard,
-  HeaderText,
-  SwitchDark,
-} from '@yyhhenry/element-extra';
+import { PageLayout, FlexCard, HeaderText, SwitchDark, } from '@yyhhenry/element-extra';
 import { anyhow } from '@yyhhenry/rust-result';
 import { ElButton } from 'element-plus';
 
@@ -22,12 +17,7 @@ const categories = computedAsync(
       <HeaderText>首页</HeaderText>
     </template>
     <template #header-extra>
-      <ElButton
-        :type="'primary'"
-        :style="{ margin: '15px' }"
-        @click="$router.push('/register')"
-        >注册</ElButton
-      >
+      <ElButton :type="'primary'" :style="{ margin: '15px' }" @click="$router.push('/register')">注册</ElButton>
       <SwitchDark></SwitchDark>
     </template>
     <FlexCard>

@@ -1,6 +1,6 @@
-import { anyhow, err, ok, type Result } from "@yyhhenry/rust-result";
+import { type Result, anyhow, err, ok } from "@yyhhenry/rust-result";
 import { isArrayOf, isPartialUnknown } from "./types";
-import { post, get } from '@/utils/fetch';
+import { get, post } from '@/utils/fetch';
 
 export interface User {
     name: string;

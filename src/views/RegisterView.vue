@@ -4,7 +4,7 @@ import { computedAsync, useDebounce } from '@vueuse/core';
 import { PageLayout, FlexCard, HeaderText, SwitchDark } from '@yyhhenry/element-extra';
 import { ok, err, type Result, anyhow } from '@yyhhenry/rust-result';
 import { ElButton, ElInput, ElMessage } from 'element-plus';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { ArrowLeftBold } from '@element-plus/icons-vue';
 import { useRouter } from 'vue-router';
 
@@ -29,7 +29,7 @@ const checkUsername = async (name: string): Promise<Result<[], Error>> => {
   }
   return ok([]);
 };
-const checkPassword = async (password: string): Promise<Result<[], Error>> => {
+const checkPassword = (password: string): Result<[], Error> => {
   if (password === '') {
     return anyhow('密码不能为空');
   }
@@ -41,12 +41,10 @@ const checkPassword = async (password: string): Promise<Result<[], Error>> => {
   }
   return ok([]);
 };
-const usernameInfo = computedAsync<Result<[], Error>>(async () => {
-  return checkUsername(debouncedUsername.value);
-}, ok([]));
-const passwordInfo = computedAsync<Result<[], Error>>(async () => {
-  return checkPassword(debouncedPassword.value);
-}, ok([]));
+const usernameInfo = computedAsync<Result<[], Error>>(() => checkUsername(debouncedUsername.value), ok([]));
+const passwordInfo = computed<Result<[], Error>>(() =>
+  checkPassword(debouncedPassword.value)
+);
 const register = async () => {
   const checkUsernameResult = await checkUsername(username.value);
   if (checkUsernameResult.isErr()) {

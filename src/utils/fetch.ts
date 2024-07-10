@@ -1,4 +1,4 @@
-import { safelyAsync, anyhow, type Result } from '@yyhhenry/rust-result';
+import { type Result, anyhow, safelyAsync } from '@yyhhenry/rust-result';
 export const post = async (url: string | URL, bodyJson?: unknown): Promise<Result<unknown, Error>> =>
     await safelyAsync(async () => {
         const body = bodyJson === undefined ? '{}' : JSON.stringify(bodyJson);

@@ -33,7 +33,7 @@ const checkPassword = (password: string): Result<[], Error> => {
   if (password === '') {
     return anyhow('密码不能为空');
   }
-  if (password.length < 8) {
+  if (password.length < 6) {
     return anyhow('密码长度不能小于 6 个字符');
   }
   if (password.length > 18) {
@@ -92,7 +92,8 @@ const register = async () => {
             </p>
           </template>
         </ElInput>
-        <ElInput type="password" v-model="password" placeholder="密码" :style="{ marginBottom: '15px' }">
+        <ElInput :show-password="true" type="password" v-model="password" placeholder="密码"
+          :style="{ marginBottom: '15px' }">
           <template #suffix>
             <p :style="{ color: 'var(--el-color-danger)' }" v-if="passwordInfo.isErr()">{{
               passwordInfo.unwrapErr().message }}

@@ -1,13 +1,12 @@
 import { type Result, anyhow, safelyAsync } from '@yyhhenry/rust-result';
-export const post = async (
-  url: string | URL,
-  bodyJson?: unknown,
-): Promise<Result<unknown, Error>> =>
-  await safelyAsync(async () => {
-    const body = bodyJson === undefined ? '{}' : JSON.stringify(bodyJson);
+
+type UrlLike = string | URL;
+
+export async function post(url: UrlLike, bodyJson: unknown): Promise<Result<unknown, Error>> {
+  return await safelyAsync(async () => {
     const response = await fetch(url, {
       method: 'POST',
-      body,
+      body: JSON.stringify(bodyJson),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -18,9 +17,10 @@ export const post = async (
     const json = (await response.json()) as unknown;
     return json;
   });
+}
 
-export const get = async (url: string | URL): Promise<Result<unknown, Error>> =>
-  await safelyAsync(async () => {
+export async function get(url: UrlLike): Promise<Result<unknown, Error>> {
+  return await safelyAsync(async () => {
     const response = await fetch(url);
     if (response.status !== 200) {
       return anyhow(`HTTP ${response.status} ${response.statusText}`);
@@ -28,3 +28,4 @@ export const get = async (url: string | URL): Promise<Result<unknown, Error>> =>
     const json = (await response.json()) as unknown;
     return json;
   });
+}

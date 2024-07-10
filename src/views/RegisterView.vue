@@ -13,7 +13,7 @@ const username = ref('');
 const password = ref('');
 const debouncedUsername = useDebounce(username, 300, { maxWait: 2000 });
 const debouncedPassword = useDebounce(password, 300, { maxWait: 2000 });
-const checkUsername = async (name: string): Promise<Result<[], Error>> => {
+async function checkUsername(name: string): Promise<Result<[], Error>> {
   if (name === '') {
     return anyhow('用户名不能为空');
   }
@@ -28,8 +28,9 @@ const checkUsername = async (name: string): Promise<Result<[], Error>> => {
     return anyhow(`用户名${name}已存在`);
   }
   return ok([]);
-};
-const checkPassword = (password: string): Result<[], Error> => {
+}
+
+function checkPassword(password: string): Result<[], Error> {
   if (password === '') {
     return anyhow('密码不能为空');
   }
@@ -40,7 +41,7 @@ const checkPassword = (password: string): Result<[], Error> => {
     return anyhow('密码长度不能超过 32 个字符');
   }
   return ok([]);
-};
+}
 const usernameInfo = computedAsync<Result<[], Error>>(
   () => checkUsername(debouncedUsername.value),
   ok([]),
@@ -48,13 +49,13 @@ const usernameInfo = computedAsync<Result<[], Error>>(
 const passwordInfo = computed<Result<[], Error>>(() =>
   checkPassword(debouncedPassword.value),
 );
-const register = async () => {
+async function register() {
   const checkUsernameResult = await checkUsername(username.value);
   if (checkUsernameResult.isErr()) {
     ElMessage.error(checkUsernameResult.unwrapErr().message);
     return;
   }
-  const checkPasswordResult = await checkPassword(password.value);
+  const checkPasswordResult = checkPassword(password.value);
   if (checkPasswordResult.isErr()) {
     ElMessage.error(checkPasswordResult.unwrapErr().message);
     return;
@@ -70,7 +71,7 @@ const register = async () => {
   }
   ElMessage.success('注册成功');
   router.push('/');
-};
+}
 </script>
 
 <template>

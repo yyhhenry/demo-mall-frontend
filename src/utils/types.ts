@@ -2,13 +2,12 @@ export type PartialUnknown<T> = {
   [P in keyof T]?: unknown;
 };
 
-export const isPartialUnknown = <T>(
-  value: unknown,
-): value is PartialUnknown<T> => {
-  return typeof value === 'object' && value !== null;
-};
+export type Predicate<T> = (value: unknown) => value is T;
 
-export const isArrayOf = <T>(
-  value: unknown,
-  predicate: (value: unknown) => value is T,
-): value is T[] => Array.isArray(value) && value.every(predicate);
+export function isPartialUnknown<T>(value: unknown): value is PartialUnknown<T> {
+  return typeof value === 'object' && value !== null;
+}
+
+export function isArrayOf<T>(value: unknown, predicate: Predicate<T>): value is T[] {
+  return Array.isArray(value) && value.every(predicate);
+}

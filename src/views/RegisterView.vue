@@ -29,7 +29,7 @@ const checkUsername = async (name: string): Promise<Result<[], Error>> => {
   }
   return ok([]);
 };
-const checkPassword = (password: string): Result<[], Error> => {
+const checkPassword = async (password: string): Promise<Result<[], Error>> => {
   if (password === '') {
     return anyhow('密码不能为空');
   }
